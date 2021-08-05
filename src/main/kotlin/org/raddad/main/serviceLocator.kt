@@ -47,15 +47,17 @@ open class Alpha {
     }
 
 
-     infix fun add(alpha: Alpha) = dependencyRegistry.putAll(accessibilityManager.resolveServiceLocatorAccess(this, alpha))
-     infix fun add(module: Module) = dependencyRegistry.putAll(module.factoryRegistry)
-     inline fun <reified T> get(): T = get(DependencyMetadata(classType = T::class))
-     inline fun <reified T> get(name: String): T = get(DependencyMetadata(className = name))
-     inline fun <reified T> contains() = this.containsDeclaration(DependencyMetadata(T::class))
+    infix fun add(alpha: Alpha) =
+        dependencyRegistry.putAll(accessibilityManager.resolveServiceLocatorAccess(this, alpha))
+
+    infix fun add(module: Module) = dependencyRegistry.putAll(module.factoryRegistry)
+    inline fun <reified T> get(): T = get(DependencyMetadata(classType = T::class))
+    inline fun <reified T> get(name: String): T = get(DependencyMetadata(className = name))
+    inline fun <reified T> contains() = this.containsDeclaration(DependencyMetadata(T::class))
 
 
     @PublishedApi
-    internal inline fun < reified T> get(key: DependencyMetadata): T = resolveInstance(this.getDependency(key))
+    internal inline fun <reified T> get(key: DependencyMetadata): T = resolveInstance(this.getDependency(key))
 
 
     @PublishedApi
@@ -68,6 +70,7 @@ open class Alpha {
 
     @PublishedApi
     internal inline fun <reified T> resolveInstance(value: Factory): T = value.resolveInstance(this)
+    infix fun add(moduleFactory: ModuleFactory) = add(moduleFactory(this))
 
 
 }

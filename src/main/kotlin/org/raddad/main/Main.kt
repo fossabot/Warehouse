@@ -1,5 +1,9 @@
 package org.raddad.main
 
+import org.raddad.main.test.FullName
+import org.raddad.main.test.Name
+import org.raddad.main.test.NameModule
+
 
 fun main() {
     //todo RetentionPolicy for dep done
@@ -7,30 +11,7 @@ fun main() {
     //todo add inner test class to sl to access Registry
     //todo injects to
     val nameServiceLocator = alpha(Accessibility.LOCAL) {
-        this add module {
-            this add factory(contract = Name::class) {
-                this constructor { FirstName() }
-                this name "osa"
-            }
-            this add factory(contract = Name::class) {
-                this constructor { FirstName() }
-                this name "first"
-                this type Type.SINGLETON
-            }
-            this add factory(contract = Name::class) {
-                constructor { LastName() }
-                this name "last"
-            }
-            this add factory {
-                this constructor { FirstName() }
-            }
-            this add factory {
-                constructor { LastName() }
-            }
-            this add factory {
-                constructor { FullName(get(), get()) }
-            }
-        }
+        this add NameModule()
     }
     val userIDServiceLocator = alpha(Accessibility.Public) {
         this add module {
@@ -94,23 +75,6 @@ enum class Access {
 
 enum class Scope {
     CONSUMER
-}
-
-interface Name {
-    fun value(): String
-}
-
-internal class FirstName : Name {
-    override fun value() = "Osama"
-}
-
-internal class LastName : Name {
-    override fun value() = "Raddad"
-
-}
-
-class FullName internal constructor(private var firstName: FirstName, private var lastName: LastName) : Name {
-    override fun value() = firstName.value() + " " + lastName.value()
 }
 
 
