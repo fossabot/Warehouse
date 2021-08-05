@@ -11,9 +11,13 @@ open class Module(private var scope: Any? = null) {
         factoryRegistry[DependencyMetadata(factory.contract, factory.name, scope)] = factory
     }
 
-    infix fun add(scope: Any) {
-        this.scope = scope
+    infix fun add(factory: () -> Factory) {
+        add(factory())
     }
+//
+//    infix fun add(scope: Any) {
+//        this.scope = scope
+//    }
 
 }
 

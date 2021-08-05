@@ -7,13 +7,13 @@ import org.raddad.main.test.NameModule
 
 fun main() {
     //todo RetentionPolicy for dep done
-    //todo scoping modules
+    //todo scoping modules not needed
     //todo add inner test class to sl to access Registry
     //todo injects to
     val nameServiceLocator = alpha(Accessibility.LOCAL) {
         this add NameModule()
     }
-    val userIDServiceLocator = alpha(Accessibility.Public) {
+    val userIDServiceLocator = alpha(Accessibility.OPEN) {
         this add module {
             this add factory {
                 this constructor { 12 }

@@ -16,7 +16,7 @@ open class Alpha {
         constructorRegistry: MutableRegistry =
             ConcurrentHashMap(),
     ) {
-        this.accessibility = Accessibility.Private
+        this.accessibility = Accessibility.ISOLATED
         this.scope = scope
         this.dependencyRegistry = constructorRegistry
         this.accessibilityManager = accessibilityManager
@@ -35,7 +35,7 @@ open class Alpha {
     }
 
     constructor(scope: Any) {
-        this.accessibility = Accessibility.Private
+        this.accessibility = Accessibility.ISOLATED
         this.scope = scope
         this.accessibilityManager = AccessibilityManager()
     }
@@ -85,7 +85,7 @@ fun alpha(
 )
 
 fun alpha(
-    accessibility: Accessibility = Accessibility.Private,
+    accessibility: Accessibility = Accessibility.ISOLATED,
     accessibilityManager: AccessibilityManagerContract = AccessibilityManager(),
     block: Alpha.() -> Unit,
 ) = Alpha(accessibility, accessibilityManager = accessibilityManager).apply(
@@ -98,6 +98,6 @@ fun alpha(
 ) = Alpha(scope, accessibilityManager = accessibilityManager)
 
 fun alpha(
-    accessibility: Accessibility = Accessibility.Private,
+    accessibility: Accessibility = Accessibility.ISOLATED,
     accessibilityManager: AccessibilityManagerContract = AccessibilityManager(),
 ) = Alpha(accessibility, accessibilityManager = accessibilityManager)

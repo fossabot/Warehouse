@@ -28,8 +28,8 @@ open class AccessibilityManager :
         hisAlpha: Alpha
     ): Registry =
         when (hisAlpha.accessibility) {
-            Accessibility.Private -> error("failed to add ${hisAlpha::class.java.name}#(PRIVATE) to ${myAlpha::class.java.name} ")
-            Accessibility.Public -> getPublicDeclarations(hisAlpha)
+            Accessibility.ISOLATED -> error("failed to add ${hisAlpha::class.java.name}#(PRIVATE) to ${myAlpha::class.java.name} ")
+            Accessibility.OPEN -> getPublicDeclarations(hisAlpha)
             Accessibility.LOCAL -> getPublicDeclarations(hisAlpha).mapKeys {
                 it.key.copy(isClosed = true)
             }
