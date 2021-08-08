@@ -4,7 +4,26 @@ import org.raddad.main.*
 
 class MainAlpha {
     private val nameServiceLocator = alpha(Accessibility.LOCAL) {
-        this add NameModule()
+        this add module {
+
+            this add factory {
+                constructor { FirstName() }
+                this injectsIn FullName::class
+                this type Type.SINGLETON
+            }
+            this add factory {
+                constructor { LastName() }
+                this injectsIn FullName::class
+                this type Type.SINGLETON
+            }
+            this add factory {
+                constructor {
+                    val firstName: FirstName = param()
+                    val lastName: LastName = param()
+                    FullName(firstName, lastName)
+                }
+            }
+        }
     }
 
     private val userIDServiceLocator = alpha(Accessibility.OPEN) {

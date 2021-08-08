@@ -48,10 +48,13 @@ data class Factory(
     ) {
 
         @PublishedApi
-        internal lateinit var constructor: Constructor<Any>
+        internal lateinit var constructor: Constructor<*>
 
         @PublishedApi
         internal lateinit var tempType: KClass<*>
+
+        @PublishedApi
+        internal var paramsVal: MutableList<KClass<*>> = mutableListOf()
 
 
         infix fun type(type: Type) = apply {
@@ -83,6 +86,10 @@ data class Factory(
             this.constructor = constructor
         }
 
+        inline fun <reified V> Alpha.param(): V {
+            paramsVal.add(V::class)
+            return this.inject().get(V::class, tempType)
+        }
 
         fun build(): Factory {
             return Factory(typeVal, contractVal ?: tempType, nameVal, injectsInVal, constructor)
@@ -100,4 +107,5 @@ fun factory(
     type: Type = Type.NEW,
     vararg injectsIn: KClass<*>,
     block: FactoryBuilder.() -> Unit
-) = FactoryBuilder(contract, name, type, if (injectsIn.isEmpty()) null else injectsIn.toMutableList()).apply(block).build()
+) = FactoryBuilder(contract, name, type, if (injectsIn.isEmpty()) null else injectsIn.toMutableList()).apply(block)
+    .build()
