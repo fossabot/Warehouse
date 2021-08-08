@@ -1,10 +1,9 @@
 package org.raddad.main
 
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.reflect.KClass
 
 
-open class Alpha {
+open class Warehouse {
     val accessibility: Accessibility
     val scope: Any?
     private val accessibilityManager: AccessibilityManagerContract
@@ -50,40 +49,12 @@ open class Alpha {
     }
 
 
-    infix fun add(alpha: Alpha) =
-        dependencyRegistry.putAll(accessibilityManager.resolveServiceLocatorAccess(this, alpha))
+    infix fun add(warehouse: Warehouse) =
+        dependencyRegistry.putAll(accessibilityManager.resolveWarehouseAccess(this, warehouse))
 
     infix fun add(module: Module) = dependencyRegistry.putAll(module.factoryRegistry)
 
-    infix fun add(moduleFactory: ModuleFactory) = this.add(moduleFactory(this))
-
     fun inject() = injector
-    fun getFactory(key: DependencyMetadata): Factory? = dependencyRegistry[key]
-    fun containsDependency(dependencyMetadata: DependencyMetadata) = dependencyRegistry.containsKey(dependencyMetadata)
+    fun getFactory(key: Metadata): Factory? = dependencyRegistry[key]
+    fun containsDependency(metadata: Metadata) = dependencyRegistry.containsKey(metadata)
 }
-
-fun alpha(
-    scope: Any,
-    accessibilityManager: AccessibilityManagerContract = AccessibilityManager(),
-    block: Alpha.() -> Unit,
-) = Alpha(scope, accessibilityManager = accessibilityManager).apply(
-    block
-)
-
-fun alpha(
-    accessibility: Accessibility = Accessibility.ISOLATED,
-    accessibilityManager: AccessibilityManagerContract = AccessibilityManager(),
-    block: Alpha.() -> Unit,
-) = Alpha(accessibility, accessibilityManager = accessibilityManager).apply(
-    block
-)
-
-fun alpha(
-    scope: Any,
-    accessibilityManager: AccessibilityManagerContract = AccessibilityManager(),
-) = Alpha(scope, accessibilityManager = accessibilityManager)
-
-fun alpha(
-    accessibility: Accessibility = Accessibility.ISOLATED,
-    accessibilityManager: AccessibilityManagerContract = AccessibilityManager(),
-) = Alpha(accessibility, accessibilityManager = accessibilityManager)

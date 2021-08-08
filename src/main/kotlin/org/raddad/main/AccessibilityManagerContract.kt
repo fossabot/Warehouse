@@ -1,9 +1,9 @@
 package org.raddad.main
 
 interface AccessibilityManagerContract {
-    fun resolveServiceLocatorAccess(
-        myAlpha: Alpha,
-        hisAlpha: Alpha
-    ): Map<out DependencyMetadata, Factory>
+    fun resolveWarehouseAccess(
+        myWarehouse: Warehouse,
+        hisWarehouse: Warehouse
+    ): Map<out Metadata, Factory>
 
 }

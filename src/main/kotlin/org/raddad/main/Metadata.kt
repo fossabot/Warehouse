@@ -2,7 +2,7 @@ package org.raddad.main
 
 import kotlin.reflect.KClass
 
-data class DependencyMetadata(
+data class Metadata(
     val classType: KClass<*>? = null,
     val className: String? = null,
     var scope: Any? = null,

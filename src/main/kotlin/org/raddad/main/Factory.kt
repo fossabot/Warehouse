@@ -1,11 +1,10 @@
 package org.raddad.main
 
-import org.raddad.main.Factory.FactoryBuilder
 import kotlin.reflect.KClass
 
 data class Factory(
     @PublishedApi
-    internal val type: Type,
+    internal val creationPattern: CreationPattern,
     @PublishedApi
     internal val contract: KClass<*>,
     @PublishedApi
@@ -21,11 +20,11 @@ data class Factory(
 
 
     @PublishedApi
-    internal inline fun <reified T> resolveInstance(alpha: Alpha): T {
-        val value = when (type) {
-            Type.NEW -> constructor(alpha)
-            Type.SINGLETON -> {
-                if (instance == null) instance = constructor(alpha)
+    internal inline fun <reified T> resolveInstance(warehouse: Warehouse): T {
+        val value = when (creationPattern) {
+            CreationPattern.NEW -> constructor(warehouse)
+            CreationPattern.SINGLETON -> {
+                if (instance == null) instance = constructor(warehouse)
                 instance
             }
         }
@@ -40,72 +39,5 @@ data class Factory(
         return value
     }
 
-    class FactoryBuilder(
-        private var contractVal: KClass<*>? = null,
-        private var nameVal: String? = null,
-        private var typeVal: Type = Type.NEW,
-        private var injectsInVal: MutableList<KClass<*>>?
-    ) {
 
-        @PublishedApi
-        internal lateinit var constructor: Constructor<*>
-
-        @PublishedApi
-        internal lateinit var tempType: KClass<*>
-
-        @PublishedApi
-        internal var paramsVal: MutableList<KClass<*>> = mutableListOf()
-
-
-        infix fun type(type: Type) = apply {
-            this.typeVal = type
-        }
-
-        infix fun contract(contract: KClass<*>) = apply {
-            this.contractVal = contract
-        }
-
-        infix fun name(name: String) = apply {
-            this.nameVal = name
-        }
-
-        infix fun injectsIn(injectsIn: MutableList<KClass<*>>) = apply {
-            this.injectsInVal = injectsIn
-        }
-
-        infix fun injectsIn(injectsIn: KClass<*>) = apply {
-            if (injectsInVal == null) {
-                injectsInVal = mutableListOf(injectsIn)
-            } else {
-                injectsInVal?.add(injectsIn)
-            }
-        }
-
-        inline infix fun <reified T : Any> constructor(noinline constructor: Constructor<T>) = apply {
-            tempType = T::class
-            this.constructor = constructor
-        }
-
-        inline fun <reified V> Alpha.param(): V {
-            paramsVal.add(V::class)
-            return this.inject().get(V::class, tempType)
-        }
-
-        fun build(): Factory {
-            return Factory(typeVal, contractVal ?: tempType, nameVal, injectsInVal, constructor)
-        }
-    }
 }
-
-enum class Type {
-    NEW, SINGLETON
-}
-
-fun factory(
-    contract: KClass<*>? = null,
-    name: String? = null,
-    type: Type = Type.NEW,
-    vararg injectsIn: KClass<*>,
-    block: FactoryBuilder.() -> Unit
-) = FactoryBuilder(contract, name, type, if (injectsIn.isEmpty()) null else injectsIn.toMutableList()).apply(block)
-    .build()

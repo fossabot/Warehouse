@@ -1,19 +1,18 @@
 package org.raddad.main
 
 import org.raddad.main.test.FullName
-import org.raddad.main.test.MainAlpha
-import org.raddad.main.test.Name
+import org.raddad.main.test.WarehousesContaner
 
 class Main {
     companion object {
 
-        private val mainAlpha = MainAlpha()
+        private val warehousesContainer = WarehousesContaner()
 
-        private val fullName: FullName by mainAlpha.userServiceLocator.inject()
-        private val access: Access by mainAlpha.consumerServiceLocator.inject()
+        private val fullName: FullName by warehousesContainer.userWarehouse.inject()
+        private val access: Access by warehousesContainer.consumerWarehouse.inject()
 
         @Named("age")
-        private val age: Int by mainAlpha.userServiceLocator.inject()
+        private val age: Int by warehousesContainer.userWarehouse.inject()
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -22,7 +21,6 @@ class Main {
             println(access)
             println(age)
             println(fullName.value())
-
         }
 
         private fun assert(boolean: Boolean, message: String) {

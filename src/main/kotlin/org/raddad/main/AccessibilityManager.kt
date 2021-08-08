@@ -6,46 +6,46 @@ open class AccessibilityManager :
     AccessibilityManagerContract {
 
 
-    override fun resolveServiceLocatorAccess(
-        myAlpha: Alpha,
-        hisAlpha: Alpha
+    override fun resolveWarehouseAccess(
+        myWarehouse: Warehouse,
+        hisWarehouse: Warehouse
     ): Registry {
         return when {
-            isNotScope(hisAlpha) -> resolveAccessibility(
-                myAlpha,
-                hisAlpha
+            isNotScope(hisWarehouse) -> resolveAccessibility(
+                myWarehouse,
+                hisWarehouse
             )
-            hasSameScope(myAlpha, hisAlpha) -> getPublicDeclarations(
-                hisAlpha
+            hasSameScope(myWarehouse, hisWarehouse) -> getPublicDeclarations(
+                hisWarehouse
             )
 
-            else -> error("failed to add ${hisAlpha::class.java.name}#(SCOPED) to ${myAlpha::class.java.name} miss matched scope")
+            else -> error("failed to add ${hisWarehouse::class.java.name}#(SCOPED) to ${myWarehouse::class.java.name} miss matched scope")
         }
     }
 
     private fun resolveAccessibility(
-        myAlpha: Alpha,
-        hisAlpha: Alpha
+        myWarehouse: Warehouse,
+        hisWarehouse: Warehouse
     ): Registry =
-        when (hisAlpha.accessibility) {
-            Accessibility.ISOLATED -> error("failed to add ${hisAlpha::class.java.name}#(PRIVATE) to ${myAlpha::class.java.name} ")
-            Accessibility.OPEN -> getPublicDeclarations(hisAlpha)
-            Accessibility.LOCAL -> getPublicDeclarations(hisAlpha).mapKeys {
+        when (hisWarehouse.accessibility) {
+            Accessibility.ISOLATED -> error("failed to add ${hisWarehouse::class.java.name}#(PRIVATE) to ${myWarehouse::class.java.name} ")
+            Accessibility.OPEN -> getPublicDeclarations(hisWarehouse)
+            Accessibility.LOCAL -> getPublicDeclarations(hisWarehouse).mapKeys {
                 it.key.copy(isClosed = true)
             }
         }
 
-    private fun isNotScope(hisAlpha: Alpha) = hisAlpha.scope == null
+    private fun isNotScope(hisWarehouse: Warehouse) = hisWarehouse.scope == null
 
 
-    private fun hasSameScope(myAlpha: Alpha, hisAlpha: Alpha) =
-        hisAlpha.scope == myAlpha.scope
+    private fun hasSameScope(myWarehouse: Warehouse, hisWarehouse: Warehouse) =
+        hisWarehouse.scope == myWarehouse.scope
 
-    private fun getPublicDeclarations(alpha: Alpha) =
-        alpha.dependencyRegistry
+    private fun getPublicDeclarations(warehouse: Warehouse) =
+        warehouse.dependencyRegistry
             .filter(::isVisibleDeclaration)
 
-    private fun isVisibleDeclaration(declaration: Map.Entry<DependencyMetadata, Factory>): Boolean {
+    private fun isVisibleDeclaration(declaration: Map.Entry<Metadata, Factory>): Boolean {
         return declaration.key.classType?.visibility == KVisibility.PUBLIC && !declaration.key.isClosed
     }
 

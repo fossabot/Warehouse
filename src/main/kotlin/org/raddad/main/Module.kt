@@ -8,9 +8,6 @@ open class Module(private var scope: Any? = null) {
 
 
     infix fun add(factory: Factory) {
-        factoryRegistry[DependencyMetadata(factory.contract, factory.name, scope)] = factory
+        factoryRegistry[Metadata(factory.contract, factory.name, scope)] = factory
     }
 }
-
-fun module(scope: Any? = null, block: Module.() -> Unit) = Module(scope).apply(block)
-
