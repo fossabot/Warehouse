@@ -13,7 +13,7 @@ data class Factory(
     @PublishedApi
     internal val injectsIn: List<KClass<*>>? = null,
     @PublishedApi
-    internal val constructor: Constructor<Any>,
+    internal val constructor: Constructor<*>,
 ) {
 
     @PublishedApi

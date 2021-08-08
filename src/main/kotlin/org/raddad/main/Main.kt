@@ -7,18 +7,18 @@ import org.raddad.main.test.Name
 class Main {
     companion object {
 
-        val mainAlpha = MainAlpha()
+        private val mainAlpha = MainAlpha()
 
-        val name0: Name = mainAlpha.userServiceLocator.inject().get("first")
-        val name1: Name = mainAlpha.userServiceLocator.inject().get("first")
-        val name2: Name = mainAlpha.userServiceLocator.inject().get("first")
-        val nameLast3: Name = mainAlpha.userServiceLocator.inject().get("last")
-        val nameLast4: Name = mainAlpha.userServiceLocator.inject().get("last")
+        private val name0: Name = mainAlpha.userServiceLocator.inject().get("first")
+        private val name1: Name = mainAlpha.userServiceLocator.inject().get("first")
+        private val name2: Name = mainAlpha.userServiceLocator.inject().get("first")
+        private val nameLast3: Name = mainAlpha.userServiceLocator.inject().get("last")
+        private val nameLast4: Name = mainAlpha.userServiceLocator.inject().get("last")
 
-        val osa: Name = mainAlpha.userServiceLocator.inject().get("osa")
-        val fullName: FullName by mainAlpha.userServiceLocator.inject()
-        val access: Access = mainAlpha.consumerServiceLocator.inject().get()
-        val age: Int = mainAlpha.consumerServiceLocator.inject().get("age")
+        private val osa: Name = mainAlpha.userServiceLocator.inject().get("osa")
+        private val fullName: FullName by mainAlpha.userServiceLocator.inject()
+        private val access: Access = mainAlpha.consumerServiceLocator.inject().get()
+        private val age: Int = mainAlpha.consumerServiceLocator.inject().get("age")
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -47,7 +47,7 @@ class Main {
 
         }
 
-        fun assert(boolean: Boolean, message: String) {
+        private fun assert(boolean: Boolean, message: String) {
             if (!boolean) println(message)
         }
 

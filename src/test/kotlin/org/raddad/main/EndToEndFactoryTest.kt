@@ -18,7 +18,7 @@ class EndToEndFactoryTest {
             this constructor { fakeDependency }
         })
 
-        Assertions.assertTrue(alpha.contains<String>(), "fail to add dependency")
+        Assertions.assertTrue(alpha.inject().contains<String>(), "fail to add dependency")
     }
 
     @Test
@@ -28,7 +28,7 @@ class EndToEndFactoryTest {
             this constructor { fakeDependency }
         })
 
-        Assertions.assertEquals(fakeDependency, alpha.get<String>(), "fail to retrieve dependency")
+        Assertions.assertEquals(fakeDependency, alpha.inject().get<String>(), "fail to retrieve dependency")
     }
 
     @Test
@@ -40,11 +40,11 @@ class EndToEndFactoryTest {
             constructor { fakeDependency }
         })
         addFactory(factory {
-            constructor { Test(alpha.get()) }
+            constructor { Test(alpha.inject().get()) }
         })
 
-        val testA: Test = alpha.get()
-        val testB: Test = alpha.get()
+        val testA: Test = alpha.inject().get()
+        val testB: Test = alpha.inject().get()
 
         Assertions.assertFalse(testA === testB, "fail to retrieve newInstance dependency")
     }
@@ -59,10 +59,10 @@ class EndToEndFactoryTest {
             constructor { fakeDependency }
         })
         addFactory(factory(type = Type.SINGLETON) {
-            constructor { Test(alpha.get()) }
+            constructor { Test(alpha.inject().get()) }
         })
-        val testA: Test = alpha.get()
-        val testB: Test = alpha.get()
+        val testA: Test = alpha.inject().get()
+        val testB: Test = alpha.inject().get()
 
         Assertions.assertTrue(testA === testB, "fail to retrieve SINGLETON dependency")
     }
@@ -77,12 +77,12 @@ class EndToEndFactoryTest {
             constructor { fakeDependency }
         })
         addFactory(factory {
-            constructor { Test(alpha.get()) }
+            constructor { Test(alpha.inject().get()) }
             this type Type.SINGLETON
         })
 
-        val testA: Test = alpha.get()
-        val testB: Test = alpha.get()
+        val testA: Test = alpha.inject().get()
+        val testB: Test = alpha.inject().get()
 
         Assertions.assertTrue(testA === testB, "fail to retrieve SINGLETON dependency")
     }
@@ -98,11 +98,11 @@ class EndToEndFactoryTest {
             constructor { fakeDependency }
         })
         addFactory(factory(contract = TestContract::class) {
-            constructor { Test(alpha.get()) }
+            constructor { Test(alpha.inject().get()) }
         })
 
         try {
-            alpha.get<TestContract>()
+            alpha.inject().get<TestContract>()
         } catch (e: TypeCastException) {
             fail("fail to retrieve contract Instance dependency",e)
         }
@@ -118,12 +118,12 @@ class EndToEndFactoryTest {
             constructor { fakeDependency }
         })
         addFactory(factory {
-            constructor { Test(alpha.get()) }
+            constructor { Test(alpha.inject().get()) }
             this contract TestContract::class
         })
 
         try {
-            alpha.get<TestContract>()
+            alpha.inject().get<TestContract>()
         } catch (e: TypeCastException) {
             fail("fail to retrieve contract Instance dependency",e)
         }
@@ -144,8 +144,8 @@ class EndToEndFactoryTest {
             constructor { fakeDependency2 }
         })
 
-        val test1: String = alpha.get(name1)
-        val test2: String = alpha.get(name2)
+        val test1: String = alpha.inject().get(name1)
+        val test2: String = alpha.inject().get(name2)
 
         Assertions.assertEquals(fakeDependency1, test1, "fail to retrieve named dependency")
         Assertions.assertEquals(fakeDependency2, test2, "fail to retrieve named dependency")
@@ -168,8 +168,8 @@ class EndToEndFactoryTest {
             this name name2
         })
 
-        val test1: String = alpha.get(name1)
-        val test2: String = alpha.get(name2)
+        val test1: String = alpha.inject().get(name1)
+        val test2: String = alpha.inject().get(name2)
 
         Assertions.assertEquals(fakeDependency1, test1, "fail to retrieve named dependency")
         Assertions.assertEquals(fakeDependency2, test2, "fail to retrieve named dependency")
