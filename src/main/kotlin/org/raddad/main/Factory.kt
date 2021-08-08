@@ -11,6 +11,8 @@ data class Factory(
     @PublishedApi
     internal val name: String? = null,
     @PublishedApi
+    internal val injectsIn: List<KClass<*>>? = null,
+    @PublishedApi
     internal val constructor: Constructor<Any>,
 ) {
 
@@ -41,7 +43,8 @@ data class Factory(
     class FactoryBuilder(
         private var contractVal: KClass<*>? = null,
         private var nameVal: String? = null,
-        private var typeVal: Type = Type.NEW
+        private var typeVal: Type = Type.NEW,
+        private var injectsInVal: MutableList<KClass<*>>?
     ) {
 
         @PublishedApi
@@ -63,6 +66,18 @@ data class Factory(
             this.nameVal = name
         }
 
+        infix fun injectsIn(injectsIn: MutableList<KClass<*>>) = apply {
+            this.injectsInVal = injectsIn
+        }
+
+        infix fun injectsIn(injectsIn: KClass<*>) = apply {
+            if (injectsInVal == null) {
+                injectsInVal = mutableListOf(injectsIn)
+            } else {
+                injectsInVal?.add(injectsIn)
+            }
+        }
+
         inline infix fun <reified T : Any> constructor(noinline constructor: Constructor<T>) = apply {
             tempType = T::class
             this.constructor = constructor
@@ -70,7 +85,7 @@ data class Factory(
 
 
         fun build(): Factory {
-            return Factory(typeVal, contractVal ?: tempType, nameVal, constructor)
+            return Factory(typeVal, contractVal ?: tempType, nameVal, injectsInVal, constructor)
         }
     }
 }
@@ -83,5 +98,6 @@ fun factory(
     contract: KClass<*>? = null,
     name: String? = null,
     type: Type = Type.NEW,
+    vararg injectsIn: KClass<*>,
     block: FactoryBuilder.() -> Unit
-) = FactoryBuilder(contract, name, type).apply(block).build()
+) = FactoryBuilder(contract, name, type, if (injectsIn.isEmpty()) null else injectsIn.toMutableList()).apply(block).build()

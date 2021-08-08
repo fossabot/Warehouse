@@ -11,7 +11,8 @@ class NameModule : ModuleFactory {
             this add FirstNameFactory()
             this add LastNameFactory()
             this add factory {
-                constructor { FullName(alpha.get(), alpha.get()) }
+                constructor { FullName(alpha.inject().get(), alpha.inject().get()) }
+                this injectsIn FirstName::class
             }
         }
     }

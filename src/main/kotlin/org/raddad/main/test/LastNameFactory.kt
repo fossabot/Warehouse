@@ -12,5 +12,6 @@ class LastNameFactory(
 ) : () -> Factory {
     override fun invoke() = factory(contract, name, type) {
         constructor { LastName() }
+        this injectsIn FullName::class
     }
 }

@@ -1,20 +1,23 @@
 package org.raddad.main
 
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.reflect.KClass
 
 
 open class Alpha {
-
     val accessibility: Accessibility
     val scope: Any?
     private val accessibilityManager: AccessibilityManagerContract
+    private val injector: Injector by lazy { Injector(this) }
+
+    @PublishedApi
     internal var dependencyRegistry: MutableRegistry = ConcurrentHashMap()
 
     constructor(
         scope: Any,
         accessibilityManager: AccessibilityManagerContract,
         constructorRegistry: MutableRegistry =
-            ConcurrentHashMap(),
+            ConcurrentHashMap()
     ) {
         this.accessibility = Accessibility.ISOLATED
         this.scope = scope
@@ -51,30 +54,13 @@ open class Alpha {
         dependencyRegistry.putAll(accessibilityManager.resolveServiceLocatorAccess(this, alpha))
 
     infix fun add(module: Module) = dependencyRegistry.putAll(module.factoryRegistry)
-    inline fun <reified T> get(): T = get(DependencyMetadata(classType = T::class))
-    inline fun <reified T> get(name: String): T = get(DependencyMetadata(className = name))
-    inline fun <reified T> contains() = this.containsDeclaration(DependencyMetadata(T::class))
 
+    infix fun add(moduleFactory: ModuleFactory) = this.add(moduleFactory(this))
 
-    @PublishedApi
-    internal inline fun <reified T> get(key: DependencyMetadata): T = resolveInstance(this.getDependency(key))
-
-
-    @PublishedApi
-    internal fun getDependency(key: DependencyMetadata) = dependencyRegistry[key]
-        ?: error("cannot get instance of ${key.classType}")
-
-    @PublishedApi
-    internal fun containsDeclaration(dependencyMetadata: DependencyMetadata) =
-        dependencyRegistry.contains(dependencyMetadata)
-
-    @PublishedApi
-    internal inline fun <reified T> resolveInstance(value: Factory): T = value.resolveInstance(this)
-    infix fun add(moduleFactory: ModuleFactory) = add(moduleFactory(this))
-
-
+    fun inject() = injector
+    fun getFactory(key: DependencyMetadata): Factory? = dependencyRegistry[key]
+    fun containsDependency(dependencyMetadata: DependencyMetadata) = dependencyRegistry.containsKey(dependencyMetadata)
 }
-
 
 fun alpha(
     scope: Any,
