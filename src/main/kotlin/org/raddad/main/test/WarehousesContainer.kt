@@ -7,7 +7,7 @@ import org.raddad.main.CreationPattern.SINGLETON
 import org.raddad.main.Main.Companion.Access.ADMIN
 import org.raddad.main.Main.Companion.Scope.CONSUMER
 
-class WarehousesContaner {
+class WarehousesContainer {
     private val nameWarehouse = warehouse(LOCAL) {
         this add module {
             this add factory {

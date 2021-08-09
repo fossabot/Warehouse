@@ -1,12 +1,12 @@
 package org.raddad.main
 
 import org.raddad.main.test.FullName
-import org.raddad.main.test.WarehousesContaner
+import org.raddad.main.test.WarehousesContainer
 
 class Main {
     companion object {
 
-        private val warehousesContainer = WarehousesContaner()
+        private val warehousesContainer = WarehousesContainer()
 
         private val fullName: FullName by warehousesContainer.userWarehouse.inject()
         private val access: Access by warehousesContainer.consumerWarehouse.inject()
