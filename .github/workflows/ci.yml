@@ -23,4 +23,4 @@ jobs:
       - name: change pr
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew jacocoTestReport
+        run: ./gradlew build
