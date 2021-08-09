@@ -28,4 +28,4 @@ jobs:
         env:
          SUPER_SECRET: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: |
-          (curl -Ls https://coverage.codacy.com/get.sh) report -l Java $(find **/jacoco*.xml -printf '-r %p ')
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Java $(find **/jacoco*.xml -printf '-r %p ')
