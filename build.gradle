@@ -1,24 +1,12 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
-    }
-}
-
 plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
     id("maven-publish")
+    id("jacoco")
 }
 //apply from: 'publish.gradle'
 
 group 'org.raddad'
 version '1.0-SNAPSHOT'
-
-
-apply plugin: "org.jetbrains.kotlin.jvm"
 
 repositories {
     mavenCentral()
@@ -33,4 +21,11 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.21'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation "io.mockk:mockk:1.12.0"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }
