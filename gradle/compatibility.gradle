@@ -1,0 +1,43 @@
+apply plugin: 'binary-compatibility-validator'
+
+apiValidation {
+    def excludeList = [
+        'ktor',
+        'ktor-client-tests',
+        'ktor-client-js',
+        'ktor-client-json-tests',
+        'ktor-client',
+        'ktor-client-features',
+        'ktor-server-test-suites',
+    ].toSet()
+
+    if (rootProject.ext.native_targets_enabled) {
+        excludeList += [
+            'ktor-client-curl',
+            'ktor-client-ios',
+        ]
+    }
+
+    def projects = [].toSet()
+    def queue = [
+        project(":ktor-client"),
+        project(":ktor-http"),
+        project(":ktor-network"),
+        project(":ktor-utils"),
+        project(":ktor-io"),
+        project(":ktor-server"),
+        project(":ktor-features"),
+    ]
+
+    while (!queue.isEmpty()) {
+        def project = queue.remove(queue.size() - 1) as Project
+        if (projects.add(project)) {
+            queue += project.childProjects.values()
+        }
+    }
+
+    def projectNames = projects.collect { it.name }.toSet()
+
+    ignoredProjects += excludeList
+    ignoredProjects += project.allprojects.collect { it.name }.findAll { !projectNames.contains(it) }
+}
