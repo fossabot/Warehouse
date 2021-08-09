@@ -24,3 +24,8 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      - shell: bash
+        env:
+         SUPER_SECRET: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: |
+          (curl -Ls https://coverage.codacy.com/get.sh) report -l Java $(find **/jacoco*.xml -printf '-r %p ')
