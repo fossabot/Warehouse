@@ -6,7 +6,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.kotlin
                 groupId 'org.raddad'
-                artifactId 'wherehouse'
+                artifactId 'warehouse'
                 version System.getenv("GET_VERSION")
             }
         }

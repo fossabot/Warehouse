@@ -36,5 +36,10 @@ fun factory(
     creationPattern: CreationPattern = CreationPattern.NEW,
     vararg injectsIn: KClass<*>,
     block: FactoryBuilder.() -> Unit
-) = FactoryBuilder(contract, name, creationPattern, if (injectsIn.isEmpty()) null else injectsIn.toMutableList()).apply(block)
+) = FactoryBuilder(
+    contract,
+    name,
+    creationPattern,
+    if (injectsIn.isEmpty()) null else injectsIn.toMutableList()
+).apply(block)
     .build()

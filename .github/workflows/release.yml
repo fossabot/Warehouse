@@ -7,7 +7,7 @@ name: Build Test Release
 
 on:
   release:
-    types: [ published, created, edited ]
+    types: [ published ]
 
 jobs:
   build:
@@ -23,22 +23,20 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
-      - name: change pr
-        run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: chmod +x gradlew | ./gradlew build
 
       - name: Build test report
         run: ./gradlew test jacocoTestReport
 
-      - name: Show tree
+      - name: Show project tree
         run: sudo apt-get install tree | tree
-      - shell: bash
+
+      - name: Upload coverage report
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: |
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r build/reports/jacoco/test/jacocoTestReport.xml
+        run:  bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r build/reports/jacoco/test/jacocoTestReport.xml
 
       - name: Get latest release version number
         id: get_version

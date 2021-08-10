@@ -104,7 +104,7 @@ class EndToEndFactoryTest {
         try {
             warehouse.inject().get<TestContract>()
         } catch (e: TypeCastException) {
-            throw Error("fail to retrieve contract Instance dependency",e)
+            fail("fail to retrieve contract Instance dependency",e)
         }
     }
 
@@ -125,56 +125,56 @@ class EndToEndFactoryTest {
         try {
             warehouse.inject().get<TestContract>()
         } catch (e: TypeCastException) {
-            throw Error("fail to retrieve contract Instance dependency",e)
+            fail("fail to retrieve contract Instance dependency",e)
         }
     }
 
-//
-//    @Test
-//    fun `Test retrieve named dependency (declared in builder constructor)`() {
-//        val name1 = "1"
-//        val name2 = "2"
-//        val fakeDependency1 = "fakeDependency1"
-//        val fakeDependency2 = "fakeDependency2"
-//
-//        addFactory(factory(name = name1) {
-//            constructor { fakeDependency1 }
-//        })
-//        addFactory(factory(name = name2) {
-//            constructor { fakeDependency2 }
-//        })
-//
-//        val test1: String = warehouse.inject().get(name1)
-//        val test2: String = warehouse.inject().get(name2)
-//
-//        Assertions.assertEquals(fakeDependency1, test1, "fail to retrieve named dependency")
-//        Assertions.assertEquals(fakeDependency2, test2, "fail to retrieve named dependency")
-//        Assertions.assertNotEquals(test1, test2, "fail to retrieve named dependency")
-//    }
-//
-//    @Test
-//    fun `Test retrieve named dependency (declared after builder constructor) dependency`() {
-//        val name1 = "1"
-//        val name2 = "2"
-//        val fakeDependency1 = "fakeDependency1"
-//        val fakeDependency2 = "fakeDependency2"
-//
-//        addFactory(factory {
-//            constructor { fakeDependency1 }
-//            this name name1
-//        })
-//        addFactory(factory {
-//            constructor { fakeDependency2 }
-//            this name name2
-//        })
-//
-//        val test1: String = warehouse.inject().get(name1)
-//        val test2: String = warehouse.inject().get(name2)
-//
-//        Assertions.assertEquals(fakeDependency1, test1, "fail to retrieve named dependency")
-//        Assertions.assertEquals(fakeDependency2, test2, "fail to retrieve named dependency")
-//        Assertions.assertNotEquals(test1, test2, "fail to retrieve named dependency")
-//    }
+
+    @Test
+    fun `Test retrieve named dependency (declared in builder constructor)`() {
+        val name1 = "1"
+        val name2 = "2"
+        val fakeDependency1 = "fakeDependency1"
+        val fakeDependency2 = "fakeDependency2"
+
+        addFactory(factory(name = name1) {
+            constructor { fakeDependency1 }
+        })
+        addFactory(factory(name = name2) {
+            constructor { fakeDependency2 }
+        })
+
+        val test1: String = warehouse.inject().get(name1)
+        val test2: String = warehouse.inject().get(name2)
+
+        Assertions.assertEquals(fakeDependency1, test1, "fail to retrieve named dependency")
+        Assertions.assertEquals(fakeDependency2, test2, "fail to retrieve named dependency")
+        Assertions.assertNotEquals(test1, test2, "fail to retrieve named dependency")
+    }
+
+    @Test
+    fun `Test retrieve named dependency (declared after builder constructor) dependency`() {
+        val name1 = "1"
+        val name2 = "2"
+        val fakeDependency1 = "fakeDependency1"
+        val fakeDependency2 = "fakeDependency2"
+
+        addFactory(factory {
+            constructor { fakeDependency1 }
+            this name name1
+        })
+        addFactory(factory {
+            constructor { fakeDependency2 }
+            this name name2
+        })
+
+        val test1: String = warehouse.inject().get(name1)
+        val test2: String = warehouse.inject().get(name2)
+
+        Assertions.assertEquals(fakeDependency1, test1, "fail to retrieve named dependency")
+        Assertions.assertEquals(fakeDependency2, test2, "fail to retrieve named dependency")
+        Assertions.assertNotEquals(test1, test2, "fail to retrieve named dependency")
+    }
 }
 
 interface TestContract

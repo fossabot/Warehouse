@@ -19,7 +19,8 @@ open class AccessibilityManager :
                 hisWarehouse
             )
 
-            else -> error("failed to add ${hisWarehouse::class.java.name}#(SCOPED) to ${myWarehouse::class.java.name} miss matched scope")
+            else -> error("failed to add ${hisWarehouse::class.java.name}#(SCOPED) " +
+                    "to ${myWarehouse::class.java.name} miss matched scope")
         }
     }
 
@@ -28,7 +29,8 @@ open class AccessibilityManager :
         hisWarehouse: Warehouse
     ): Registry =
         when (hisWarehouse.accessibility) {
-            Accessibility.ISOLATED -> error("failed to add ${hisWarehouse::class.java.name}#(PRIVATE) to ${myWarehouse::class.java.name} ")
+            Accessibility.ISOLATED -> error("failed to add ${hisWarehouse::class.java.name}#(PRIVATE) " +
+                        "to ${myWarehouse::class.java.name} ")
             Accessibility.OPEN -> getPublicDeclarations(hisWarehouse)
             Accessibility.LOCAL -> getPublicDeclarations(hisWarehouse).mapKeys {
                 it.key.copy(isClosed = true)
