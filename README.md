@@ -34,18 +34,18 @@ private val name: Name by warehouse.inject()
 Add it in your root build.gradle at the end of repositories:
 
 ```groove
-	allprojects {
-		repositories {
-			...
-			maven {
-            			url = uri("https://maven.pkg.github.com/osama-raddad/Warehouse")
-            			credentials { //this is temporary solution until github fixes the public packages problem (this key is ready only)
-                			username = "osama-raddad"
-                			password = "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" 
-           			}
-       			}
-		}
+allprojects {
+	repositories {
+		...
+		maven {
+            		url = uri("https://maven.pkg.github.com/osama-raddad/Warehouse")
+            		credentials { //this is temporary solution until github fixes the public packages problem (this key is ready only)
+                		username = "osama-raddad"
+                		password = "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" 
+           		}
+       		}
 	}
+}
 ```
 
 Step 2. Add the dependency
