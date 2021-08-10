@@ -26,6 +26,13 @@ class Injector(
     }
 
     @PublishedApi
+    internal inline fun <reified T> get(name: String, target: KClass<*>): T {
+        val key = Metadata(className = name)
+        val factory = warehouse.getFactory(key) ?: error("${key.classType ?: key.className} doesn't exist in the graph")
+        return resolveAccessibility(factory, target = target)
+    }
+
+    @PublishedApi
     internal inline fun <reified T> resolveAccessibility(
         factory: Factory,
         target: KClass<*>

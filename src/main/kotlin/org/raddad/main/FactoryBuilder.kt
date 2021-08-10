@@ -53,6 +53,11 @@ class FactoryBuilder(
         return this.inject().get(V::class, tempType)
     }
 
+    inline fun <reified V> Warehouse.param(name: String): V {
+        paramsVal.add(V::class)
+        return this.inject().get(name, tempType)
+    }
+
     fun build(): Factory {
         return Factory(creationPatternVal, contractVal ?: tempType, nameVal, injectsInVal, constructor)
     }
