@@ -1,4 +1,5 @@
 plugins {
+    id('java-library')
     id 'org.jetbrains.kotlin.jvm' version '1.5.21'
     id("maven-publish")
     id("jacoco")
@@ -11,14 +12,25 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-sourceSets {
-    main.kotlin.srcDirs = ["src/main/kotlin"]
+kotlin {
+//    incremental=false
+    compileKotlin {
+        kotlinOptions {
+            useOldBackend = true
+        }
+    }
+    sourceSets {
+        main.kotlin.srcDirs = ["src/main/kotlin/org/raddad/main"]
+    }
 }
+
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.21'
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.0.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.0.0"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.2'
     testImplementation "io.mockk:mockk:1.12.0"
 }
 test {
