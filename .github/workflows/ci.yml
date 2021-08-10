@@ -27,5 +27,5 @@ jobs:
       - shell: bash
         env:
          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: |
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r build/reports/jacoco/test/jacocoTestReport.xml
+        run: | 
+            sudo apt-get install tree | tree
