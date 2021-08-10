@@ -4,7 +4,7 @@ plugins {
     id("maven-publish")
     id("jacoco")
 }
-//apply from: 'publish.gradle'
+apply from: 'publish.gradle'
 
 group 'org.raddad'
 version '1.0-SNAPSHOT'
