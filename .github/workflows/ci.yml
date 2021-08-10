@@ -5,7 +5,7 @@
 
 name: Java CI
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
@@ -24,12 +24,12 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
-      - name: Build test report 
-        run: ./gradlew test jacocoTestReport
-      - name: Show tree
-        run: sudo apt-get install tree | tree
+      - name: Build test report
+        run: ./gradlew test jacocoTestReport | sudo apt-get install tree | tree
+#      - name: Show tree
+#        run: sudo apt-get install tree | tree
       - shell: bash
         env:
-         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: |  
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: |
           bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r build/reports/jacoco/test/jacocoTestReport.xml

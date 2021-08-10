@@ -104,7 +104,7 @@ class EndToEndFactoryTest {
         try {
             warehouse.inject().get<TestContract>()
         } catch (e: TypeCastException) {
-            fail("fail to retrieve contract Instance dependency",e)
+            throw Error("fail to retrieve contract Instance dependency",e)
         }
     }
 
@@ -125,7 +125,7 @@ class EndToEndFactoryTest {
         try {
             warehouse.inject().get<TestContract>()
         } catch (e: TypeCastException) {
-            fail("fail to retrieve contract Instance dependency",e)
+            throw Error("fail to retrieve contract Instance dependency",e)
         }
     }
 
