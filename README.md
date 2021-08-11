@@ -1,3 +1,6 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a7d05223d023434ab63131adfdcd592a)](https://www.codacy.com/gh/osama-raddad/Warehouse/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=osama-raddad/Warehouse&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/a7d05223d023434ab63131adfdcd592a)](https://www.codacy.com/gh/osama-raddad/Warehouse/dashboard?utm_source=github.com&utm_medium=referral&utm_content=osama-raddad/Warehouse&utm_campaign=Badge_Coverage)
+
 ## Warehouse DSL
 
 Warehouse is a lightweight Kotlin DSL dependency injection library this library has an extremely faster learning curve and
