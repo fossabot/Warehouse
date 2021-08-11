@@ -1,6 +1,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a7d05223d023434ab63131adfdcd592a)](https://www.codacy.com/gh/osama-raddad/Warehouse/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=osama-raddad/Warehouse&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/a7d05223d023434ab63131adfdcd592a)](https://www.codacy.com/gh/osama-raddad/Warehouse/dashboard?utm_source=github.com&utm_medium=referral&utm_content=osama-raddad/Warehouse&utm_campaign=Badge_Coverage)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fosama-raddad%2FWarehouse.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fosama-raddad%2FWarehouse?ref=badge_shield)
 
 
 ## Warehouse DSL
@@ -88,3 +89,6 @@ osama.s.raddad@gmail.com And do let me know if you have any questions or suggest
     See the License for the specific language governing permissions and
     limitations under the License.
 
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fosama-raddad%2FWarehouse.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fosama-raddad%2FWarehouse?ref=badge_large)
